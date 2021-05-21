@@ -1,4 +1,4 @@
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import Colors from "../constants/Colors";
 import useColorScheme from "./useColorScheme";
 
 // get theme color from Colors based on theme preference, values are over-ridable

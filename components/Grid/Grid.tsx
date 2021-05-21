@@ -1,46 +1,65 @@
-import React from "react";
-import { StyleSheet, ViewStyle } from "react-native";
+import React, { createContext, useContext } from "react";
+import { ViewStyle } from "react-native";
 import Layout from "../../constants/Layout";
 
-import { View, ViewProps } from "../Themed";
+import { ContainerProps, Container } from "../Themed";
 
-export type GridProps = ViewProps & {
+export type GridProps = ContainerProps & {
   item?: boolean;
   container?: boolean;
-  xs: number;
-  sm: number;
-  direction: "row" | "column";
+  xs?: number;
+  sm?: number;
+  direction?: "row" | "column" | "row-reverse" | "column-reverse";
+  spacing?: number;
 };
+
+const GridContext = createContext({ spacing: 0 });
 
 const Grid = ({
   children,
   item,
   container,
-  xs,
-  sm,
-  direction,
+  xs = 12,
+  sm = 12,
+  direction = "row",
+  spacing = 0,
+  style,
   ...props
 }: GridProps) => {
-  const styleProps = {};
+  const styleProps: ViewStyle = {};
 
-  const br = Math.max(Math.min(Layout.isSmallDevice ? xs : sm, 0), 12) / 12;
+  const context = useContext(GridContext);
+
+  const br = Math.min(Math.max(Layout.isSmallDevice ? xs : sm, 0), 12) / 12;
 
   if (item)
     Object.assign(styleProps, {
-      flexBasis: `${br}`,
-      width: `${br * 100}%`,
+      flexBasiss: br,
+      maxWidth: `${br * 100}%`,
       flexGrow: 0,
+      flexShrink: 1,
+      padding: Layout.spacing(context.spacing),
     });
   if (container)
-    Object.assign(styleProps, { flexWrap: "none", flexDirection: direction });
+    Object.assign(styleProps, {
+      width: "100%",
+      flexWrap: "wrap",
+      flexDirection: direction,
+    });
 
-  return (
-    <View style={[styles.root]} {...props}>
+  const body = (
+    <Container style={[styleProps, style]} {...props}>
       {children}
-    </View>
+    </Container>
   );
+
+  if (container) {
+    return (
+      <GridContext.Provider value={{ spacing }}>{body}</GridContext.Provider>
+    );
+  }
+
+  return body;
 };
 
 export default Grid;
-
-const styles = StyleSheet.create({ root: { display: "flex" } });

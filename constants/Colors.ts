@@ -12,19 +12,24 @@ const GREY = {
 
 const BRAND = "#00AB55";
 
+const PALLETE = {
+  brand: BRAND,
+  transparent: "transparent",
+};
+
 export default {
   light: {
     text: GREY[900],
     tint: GREY[400],
     background: GREY[100],
-    paper: "#fff",
-    brand: BRAND,
+    paper: "#ffffff",
+    ...PALLETE,
   },
   dark: {
     text: GREY[100],
     tint: GREY[600],
     background: GREY[900],
     paper: GREY[800],
-    brand: BRAND,
+    ...PALLETE,
   },
 };

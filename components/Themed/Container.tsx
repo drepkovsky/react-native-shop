@@ -4,14 +4,19 @@ import { View as DefaultView } from "react-native";
 import { ThemeProps } from "../../types";
 import useThemeColor from "../../hooks/useThemeColor";
 
-export type ViewProps = ThemeProps & DefaultView["props"];
+export type ContainerProps = ThemeProps & DefaultView["props"];
 
-export function View(props: ViewProps) {
+export function Container(props: ContainerProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
   const backgroundColor = useThemeColor(
     { light: lightColor, dark: darkColor },
-    "background"
+    "transparent"
   );
 
-  return <DefaultView style={[{ backgroundColor }, , style]} {...otherProps} />;
+  return (
+    <DefaultView
+      style={[{ backgroundColor }, { overflow: "visible" }, style]}
+      {...otherProps}
+    />
+  );
 }

@@ -1,17 +1,17 @@
 import * as React from "react";
 
-import { View as DefaultView } from "react-native";
+import { View } from "react-native";
 import { ThemeProps } from "../../types";
 import useThemeColor from "../../hooks/useThemeColor";
 
-export type ViewProps = ThemeProps & DefaultView["props"];
+export type PaperProps = ThemeProps & View["props"];
 
-export function View(props: ViewProps) {
+export function Paper(props: PaperProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
   const backgroundColor = useThemeColor(
     { light: lightColor, dark: darkColor },
-    "background"
+    "paper"
   );
 
-  return <DefaultView style={[{ backgroundColor }, , style]} {...otherProps} />;
+  return <View style={[{ backgroundColor }, style]} {...otherProps} />;
 }
