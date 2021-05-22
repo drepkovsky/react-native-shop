@@ -1,117 +1,35 @@
-import * as React from "react";
-import { FlatList, StyleSheet } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import { Card, CardContent, CardHeader } from "../components/Card/Card";
-import Grid from "../components/Grid/Grid";
+import React, { useEffect } from "react";
+import { StyleSheet } from "react-native";
+import ProductsList from "../components/Products/ProductsList";
 
-import { Container, Text, View } from "../components/Themed";
-import Layout from "../constants/Layout";
-
-const data = [
-  {
-    title: "Card",
-    content: `Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsa
-aut officiis aliquam sunt repellendus soluta a. Ipsa odio, atque
-voluptate asperiores quae vero nostrum animi vitae blanditiis
-facere porro dignissimos?`,
-  },
-  {
-    title: "Card",
-    content: `Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsa
-aut officiis aliquam sunt repellendus soluta a. Ipsa odio, atque
-voluptate asperiores quae vero nostrum animi vitae blanditiis
-facere porro dignissimos?`,
-  },
-  {
-    title: "Card",
-    content: `Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsa
-aut officiis aliquam sunt repellendus soluta a. Ipsa odio, atque
-voluptate asperiores quae vero nostrum animi vitae blanditiis
-facere porro dignissimos?`,
-  },
-  {
-    title: "Card",
-    content: `Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsa
-aut officiis aliquam sunt repellendus soluta a. Ipsa odio, atque
-voluptate asperiores quae vero nostrum animi vitae blanditiis
-facere porro dignissimos?`,
-  },
-  {
-    title: "Card",
-    content: `Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsa
-aut officiis aliquam sunt repellendus soluta a. Ipsa odio, atque
-voluptate asperiores quae vero nostrum animi vitae blanditiis
-facere porro dignissimos?`,
-  },
-  {
-    title: "Card",
-    content: `Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsa
-aut officiis aliquam sunt repellendus soluta a. Ipsa odio, atque
-voluptate asperiores quae vero nostrum animi vitae blanditiis
-facere porro dignissimos?`,
-  },
-  {
-    title: "Card",
-    content: `Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsa
-aut officiis aliquam sunt repellendus soluta a. Ipsa odio, atque
-voluptate asperiores quae vero nostrum animi vitae blanditiis
-facere porro dignissimos?`,
-  },
-  {
-    title: "Card",
-    content: `Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsa
-aut officiis aliquam sunt repellendus soluta a. Ipsa odio, atque
-voluptate asperiores quae vero nostrum animi vitae blanditiis
-facere porro dignissimos?`,
-  },
-  {
-    title: "Card",
-    content: `Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsa
-aut officiis aliquam sunt repellendus soluta a. Ipsa odio, atque
-voluptate asperiores quae vero nostrum animi vitae blanditiis
-facere porro dignissimos?`,
-  },
-  {
-    title: "Card",
-    content: `Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsa
-aut officiis aliquam sunt repellendus soluta a. Ipsa odio, atque
-voluptate asperiores quae vero nostrum animi vitae blanditiis
-facere porro dignissimos?`,
-  },
-];
+import { Text, View } from "../components/Themed";
+import { useAppSelector } from "../hooks/useRedux";
+import { loadProducts } from "../redux/actions/act_products";
+import { useAppDispatch } from "./../hooks/useRedux";
 
 export default function ProductsScreen() {
+  // redux
+  const { products, isLoading } = useAppSelector((state) => state.products);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (!products) dispatch(loadProducts());
+  }, [products]);
+
   return (
-    <Container style={styles.container}>
-      <FlatList
-        scrollEnabled={true}
-        style={{ overflow: "visible" }}
-        data={data}
-        numColumns={2}
-        renderItem={(item) => (
-          <Container style={styles.card}>
-            <Card>
-              <CardHeader>
-                <Text variant="subtitle">{item.item.title}</Text>
-              </CardHeader>
-              <CardContent>
-                <Text>{item.item.content}</Text>
-              </CardContent>
-            </Card>
-          </Container>
-        )}
-      />
-    </Container>
+    <View style={styles.container}>
+      {isLoading && <Text>Loading...</Text>}
+      {!products?.length ? (
+        <Text>No products...</Text>
+      ) : (
+        <ProductsList data={products} />
+      )}
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    overflow: "visible",
     flex: 1,
-  },
-  card: {
-    maxWidth: "50%",
-    padding: Layout.spacing(1),
   },
 });

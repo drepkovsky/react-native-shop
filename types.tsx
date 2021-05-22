@@ -26,3 +26,12 @@ export type ThemeProps = {
   lightColor?: string;
   darkColor?: string;
 };
+
+export type Product = {
+  id: number;
+  category: string;
+  description: string;
+  title: string;
+  price: number;
+  image: string;
+};

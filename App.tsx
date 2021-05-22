@@ -12,7 +12,7 @@ import Navigation from "./navigation";
 
 // redux
 import { Provider } from "react-redux";
-import store from "./store";
+import store from "./redux/store";
 
 // component
 export default function App() {
