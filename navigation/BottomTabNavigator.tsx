@@ -34,6 +34,7 @@ export default function BottomTabNavigator() {
     <Tab.Navigator
       tabBarPosition="bottom"
       initialRouteName="Shop"
+      lazy
       tabBarOptions={{
         showIcon: true,
         showLabel: false,
@@ -49,7 +50,8 @@ export default function BottomTabNavigator() {
           shadowOpacity: 0,
           borderTopWidth: 0,
         },
-      }}>
+      }}
+    >
       {/* shop tab */}
       <Tab.Screen
         name="Shop"
@@ -114,7 +116,8 @@ function TabShopNavigator() {
         },
         headerTintColor: Colors[colorScheme].text,
         headerTitleAlign: "center",
-      }}>
+      }}
+    >
       <TabShopStack.Screen
         name="Products"
         component={ProductsScreen}
@@ -148,7 +151,8 @@ function TabCartNavigator() {
         },
         headerTintColor: Colors[colorScheme].text,
         headerTitleAlign: "center",
-      }}>
+      }}
+    >
       <TabCartStack.Screen
         name="Cart"
         component={CartScreen}
@@ -170,7 +174,8 @@ function TabUserNavigator() {
         },
         headerTintColor: Colors[colorScheme].text,
         headerTitleAlign: "center",
-      }}>
+      }}
+    >
       <TabUserStack.Screen
         name="User"
         component={UserScreen}

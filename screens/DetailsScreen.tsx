@@ -4,9 +4,10 @@ import React, { Fragment, useEffect, useState } from "react";
 import {
   ActivityIndicator,
   Image,
+  Platform,
+  Pressable,
   ScrollView,
   StyleSheet,
-  TouchableNativeFeedback,
 } from "react-native";
 
 // internal
@@ -101,7 +102,15 @@ export default function DetailsScreen({ route }: DetailsScreenProp) {
           <Container
             style={[styles.bottomContainer, { backgroundColor: brand }]}
           >
-            <TouchableNativeFeedback onPress={onAddToCard}>
+            <Pressable
+              android_ripple={{ color: "#fff" }}
+              style={({ pressed }) => [
+                {
+                  opacity: pressed && Platform.OS === "ios" ? 0.5 : 1,
+                },
+              ]}
+              onPress={onAddToCard}
+            >
               <Container>
                 <Text variant="title" style={styles.bottomText}>
                   <Ionicons
@@ -112,7 +121,7 @@ export default function DetailsScreen({ route }: DetailsScreenProp) {
                   Add to cart
                 </Text>
               </Container>
-            </TouchableNativeFeedback>
+            </Pressable>
           </Container>
         </Fragment>
       )}

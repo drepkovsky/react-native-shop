@@ -61,7 +61,15 @@ const ProductCard = ({ product, onProductClick }: ProductItemProps) => {
                 justifyContent: "flex-end",
               }}
             >
-              <Pressable onPress={onAddToCard}>
+              <Pressable
+                onPress={onAddToCard}
+                hitSlop={30}
+                style={({ pressed }) => [
+                  {
+                    opacity: pressed ? 0.5 : 1,
+                  },
+                ]}
+              >
                 <Ionicons
                   name="ios-cart"
                   size={25}

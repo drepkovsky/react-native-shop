@@ -1,14 +1,15 @@
 import { Ionicons } from "@expo/vector-icons";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { Image, Platform, Pressable, StyleSheet } from "react-native";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
 import { Card, CardContent } from "../components/Card/Card";
 import Grid from "../components/Grid/Grid";
 
-import { Container, Text, View } from "../components/Themed";
+import { Container, Paper, Text, View } from "../components/Themed";
 import Layout from "../constants/Layout";
 import { useAppSelector } from "../hooks/useRedux";
+import useThemeColor from "../hooks/useThemeColor";
 import {
   addProductToCart,
   removeProductFromCart,
@@ -29,6 +30,17 @@ export default function CartScreen() {
     dispatch(removeProductFromCart(id));
   };
 
+  const getTotal = () => {
+    let total = 0;
+
+    Object.keys(productIds).forEach((key) => {
+      total += products[key].price * productIds[key];
+    });
+    return total;
+  };
+
+  const brand = useThemeColor({}, "brand");
+
   return (
     <View style={styles.container}>
       {!Object.keys(productIds).length || !products ? (
@@ -38,6 +50,7 @@ export default function CartScreen() {
           style={styles.container}
           contentContainerStyle={{ paddingVertical: Layout.spacing(2) }}
           data={Object.keys(productIds)}
+          keyExtractor={(item) => item}
           renderItem={(item) => (
             <CartItem
               onAdd={onAdd}
@@ -49,6 +62,50 @@ export default function CartScreen() {
           )}
         />
       )}
+      {/* bottom button */}
+      <Container style={[styles.bottomContainer]}>
+        <Grid container>
+          <Grid item xs={7} sm={7}>
+            <Paper style={[styles.fill]}>
+              <Grid container>
+                <Grid item xs={6} sm={6}>
+                  <Text
+                    variant="title"
+                    style={[styles.totalText, { textAlign: "center" }]}
+                  >
+                    Total :
+                  </Text>
+                </Grid>
+                <Grid item xs={6} sm={6}>
+                  <Text
+                    variant="title"
+                    color="brand"
+                    style={[styles.totalText, { textAlign: "center" }]}
+                  >
+                    {`${getTotal()} $`}
+                  </Text>
+                </Grid>
+              </Grid>
+            </Paper>
+          </Grid>
+          <Grid item xs={5} sm={5}>
+            <Container style={[styles.fill, { backgroundColor: brand }]}>
+              <Pressable
+                android_ripple={{ color: "#fff" }}
+                style={({ pressed }) => [
+                  {
+                    opacity: pressed && Platform.OS === "ios" ? 0.5 : 1,
+                  },
+                ]}
+              >
+                <Text variant="title" style={[styles.bottomButtonText]}>
+                  Buy now
+                </Text>
+              </Pressable>
+            </Container>
+          </Grid>
+        </Grid>
+      </Container>
     </View>
   );
 }
@@ -93,16 +150,32 @@ const CartItem = ({
           </Grid>
           <Grid item xs={2} sm={2}>
             <Container style={styles.align}>
-              <TouchableOpacity onPress={() => onAdd(product.id)}>
+              <Pressable
+                style={({ pressed }) => [
+                  {
+                    opacity: pressed ? 0.5 : 1,
+                  },
+                ]}
+                hitSlop={20}
+                onPress={() => onAdd(product.id)}
+              >
                 <Ionicons size={25} name="ios-add-circle-outline" />
-              </TouchableOpacity>
+              </Pressable>
             </Container>
           </Grid>
           <Grid item xs={2} sm={2}>
             <Container style={styles.align}>
-              <TouchableOpacity onPress={() => onRemove(product.id)}>
+              <Pressable
+                style={({ pressed }) => [
+                  {
+                    opacity: pressed ? 0.5 : 1,
+                  },
+                ]}
+                hitSlop={20}
+                onPress={() => onRemove(product.id)}
+              >
                 <Ionicons size={25} name="ios-remove-circle-outline" />
-              </TouchableOpacity>
+              </Pressable>
             </Container>
           </Grid>
         </Grid>
@@ -128,5 +201,30 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  bottomContainer: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    width: "100%",
+    height: 60,
+    zIndex: 100,
+  },
+  fill: {
+    width: "100%",
+    height: "100%",
+  },
+  bottomButtonText: {
+    color: "#ffff",
+    textAlign: "center",
+    width: "100%",
+    height: "100%",
+    textTransform: "uppercase",
+    textAlignVertical: "center",
+  },
+  totalText: {
+    width: "100%",
+    height: "100%",
+    textAlignVertical: "center",
   },
 });

@@ -20,7 +20,6 @@ const SnackbarProvider: React.FC = ({ children }) => {
   // state
   const [activeSnack, setActiveSnack] = useState<Snack | null>(null);
   const snackStack = useRef<Snack[]>([]).current;
-  const [wasEndedManually, setEndedManually] = useState(false);
 
   // anim
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -65,7 +64,8 @@ const SnackbarProvider: React.FC = ({ children }) => {
     <SnackbarContext.Provider value={{ show }}>
       {children}
       <Animated.View
-        style={[styles.root, { opacity: fadeAnim, backgroundColor: paper }]}>
+        style={[styles.root, { opacity: fadeAnim, backgroundColor: paper }]}
+      >
         <Text style={styles.align} color="brand" variant="subtitle">
           {activeSnack?.message}
         </Text>
