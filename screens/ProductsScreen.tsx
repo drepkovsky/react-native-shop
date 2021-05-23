@@ -24,8 +24,8 @@ export default function ProductsScreen({ navigation }: ProductScreenProp) {
 
   // effects
   useEffect(() => {
-    if (!products) dispatch(loadProducts());
-  }, [products]);
+    dispatch(loadProducts());
+  }, []);
 
   // misc
   const onProductClick = React.useCallback((productId: number) => {
@@ -42,8 +42,9 @@ export default function ProductsScreen({ navigation }: ProductScreenProp) {
         contentContainerStyle={!products?.size && styles.container}
         refreshControl={
           <RefreshControl refreshing={isLoading} onRefresh={onRefresh} />
-        }>
-        {!products?.size ? (
+        }
+      >
+        {!Object.keys(products).length ? (
           isLoading ? (
             <ActivityIndicator color={brand} />
           ) : (
@@ -51,7 +52,7 @@ export default function ProductsScreen({ navigation }: ProductScreenProp) {
           )
         ) : (
           <ProductsList
-            data={Array.from(products.values())}
+            data={Object.values(products)}
             onProductClick={onProductClick}
           />
         )}

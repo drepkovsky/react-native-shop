@@ -32,13 +32,13 @@ export const setProducts =
   (dispatch) => {
     // dispatch products to store
 
-    const mapProducts = new Map();
+    const objProducts: { [key: string]: Product } = {};
     products.forEach((product) => {
-      mapProducts.set(product.id, product);
+      objProducts[product.id] = product;
     });
 
     dispatch({
       type: PRODUCTS_SET_PRODUCTS,
-      payload: { products: mapProducts },
+      payload: { products: objProducts },
     });
   };

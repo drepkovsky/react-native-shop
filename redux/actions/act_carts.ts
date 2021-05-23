@@ -1,6 +1,6 @@
 // types
 import { AppThunk } from "../store";
-import { CART_ADD_PRODUCT } from "../types";
+import { CART_ADD_PRODUCT, CART_REMOVE_PRODUCT } from "../types";
 
 /**
  * @desc adds productId to cart storage
@@ -16,8 +16,8 @@ export const addProductToCart =
  * @desc adds productId to cart storage
  * @param productId id of product to be added to storage
  */
-export const subtractProductFromCart =
+export const removeProductFromCart =
   (productId: number): AppThunk =>
   (dispatch) => {
-    dispatch({ type: CART_ADD_PRODUCT, payload: { productId: productId } });
+    dispatch({ type: CART_REMOVE_PRODUCT, payload: { productId: productId } });
   };

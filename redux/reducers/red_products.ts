@@ -5,12 +5,12 @@ import { Product } from "../../types";
 import { PRODUCTS_SET_PRODUCTS } from "./../types";
 
 export interface ProductsState {
-  products: Map<any, Product> | null;
+  products: { [key: string]: Product };
   isLoading: boolean;
 }
 
 const initialState = {
-  products: null,
+  products: {},
   isLoading: false,
 };
 

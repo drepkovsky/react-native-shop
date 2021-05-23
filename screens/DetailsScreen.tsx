@@ -39,7 +39,7 @@ export default function DetailsScreen({ route }: DetailsScreenProp) {
 
   // hooks
   useEffect(() => {
-    if (products && productId) setProduct(products.get(productId) || null);
+    if (products && productId) setProduct(products[productId] || null);
   }, [productId, products]);
 
   // snackbar
@@ -72,7 +72,8 @@ export default function DetailsScreen({ route }: DetailsScreenProp) {
                     <Text
                       style={styles.category}
                       variant="body1"
-                      color="disabled">
+                      color="disabled"
+                    >
                       {product.category}
                     </Text>
                   </Grid>
@@ -98,7 +99,8 @@ export default function DetailsScreen({ route }: DetailsScreenProp) {
 
           {/* bottom button */}
           <Container
-            style={[styles.bottomContainer, { backgroundColor: brand }]}>
+            style={[styles.bottomContainer, { backgroundColor: brand }]}
+          >
             <TouchableNativeFeedback onPress={onAddToCard}>
               <Container>
                 <Text variant="title" style={styles.bottomText}>

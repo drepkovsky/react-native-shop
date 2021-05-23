@@ -59,7 +59,8 @@ const ProductCard = ({ product, onProductClick }: ProductItemProps) => {
                 flex: 1,
                 flexDirection: "row",
                 justifyContent: "flex-end",
-              }}>
+              }}
+            >
               <Pressable onPress={onAddToCard}>
                 <Ionicons
                   name="ios-cart"

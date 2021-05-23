@@ -1,31 +1,39 @@
 // types
-import { CART_ADD_PRODUCT, CART_SUBTRACT_PRODUCT } from "../types";
+import { CART_ADD_PRODUCT, CART_REMOVE_PRODUCT } from "../types";
 import { AppReducer } from "../store";
 
 export interface CardState {
-  products: Map<any, number>;
+  products: { [key: string]: number };
 }
 
 const initialState = {
-  products: new Map(),
+  products: {},
 };
 
 // Reducers for cart store logic
 const cartReducer: AppReducer<CardState> = (state = initialState, action) => {
   switch (action.type) {
     case CART_ADD_PRODUCT: {
-      const res = (state.products?.get(action.payload.productsId) || 0) + 1;
-      state.products.set(action.payload.productsId, res);
-      return state;
+      const res = (state.products[action.payload.productId] || 0) + 1;
+      return {
+        ...state,
+        products: { ...state.products, [action.payload.productId]: res },
+      };
     }
-    case CART_SUBTRACT_PRODUCT: {
-      let res = state.products?.get(action.payload.productsId);
-      if (res !== undefined) {
-        res -= 1;
-        if (res === 0) state.products.delete(action.payload.productsId);
-        else state.products.set(action.payload.productsId, res);
+    case CART_REMOVE_PRODUCT: {
+      const res = (state.products[action.payload.productId] || 1) - 1;
+      if (!res) {
+        delete state.products[action.payload.productId];
+        return {
+          ...state,
+          products: { ...state.products },
+        };
+      } else {
+        return {
+          ...state,
+          products: { ...state.products, [action.payload.productId]: res },
+        };
       }
-      return state;
     }
     default:
       return state;
