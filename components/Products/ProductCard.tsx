@@ -1,8 +1,7 @@
 // react
 import { Ionicons } from "@expo/vector-icons";
-import React, { Fragment } from "react";
-import { Pressable, StyleSheet, TouchableNativeFeedback } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import React from "react";
+import { Pressable, StyleSheet } from "react-native";
 import Layout from "../../constants/Layout";
 import Styles from "../../constants/Styles";
 import { Product, ProductCallback } from "../../types";
@@ -11,6 +10,9 @@ import { strTrim } from "../../utils/utils";
 import { Card, CardContent, CardHeader, CardImage } from "../Card/Card";
 import { Container, Paper, Text } from "../Themed";
 import useThemeColor from "./../../hooks/useThemeColor";
+import { useAppDispatch } from "./../../hooks/useRedux";
+import { addProductToCart } from "./../../redux/actions/act_carts";
+import { useSnackbar } from "../../hooks/useSnackbar";
 
 export type ProductItemProps = {
   product: Product;
@@ -25,8 +27,15 @@ const ProductCard = ({ product, onProductClick }: ProductItemProps) => {
     "brand"
   );
 
+  // redux
+  const dispatch = useAppDispatch();
+
+  // snackbar
+  const showSnackbar = useSnackbar();
+
   const onAddToCard = () => {
-    console.log("add to cart");
+    dispatch(addProductToCart(product.id));
+    if (showSnackbar) showSnackbar({ message: "Added to cart", duration: 500 });
   };
 
   const onCardClick = () => {
@@ -50,8 +59,7 @@ const ProductCard = ({ product, onProductClick }: ProductItemProps) => {
                 flex: 1,
                 flexDirection: "row",
                 justifyContent: "flex-end",
-              }}
-            >
+              }}>
               <Pressable onPress={onAddToCard}>
                 <Ionicons
                   name="ios-cart"
@@ -78,6 +86,7 @@ const styles = StyleSheet.create({
     width: "100%",
     resizeMode: "contain",
     marginBottom: Layout.spacing(2),
+    backgroundColor: "#fff",
   },
   content: { flexDirection: "row" },
 });

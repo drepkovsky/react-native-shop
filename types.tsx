@@ -31,10 +31,11 @@ export type ProductScreenNavigationProp = StackNavigationProp<
   "Products"
 >;
 
-export type DetailsScreenNavigationProp = StackNavigationProp<
-  TabShopParamList,
-  "Details"
->;
+export type Snack = {
+  message: string;
+  duration: number;
+};
+
 export type DetailsScreenRouteProp = RouteProp<TabShopParamList, "Details">;
 
 export type ThemeProps = {

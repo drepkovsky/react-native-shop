@@ -1,45 +1,40 @@
 // react
 import React, { useEffect, useState } from "react";
-import {
-  NativeScrollEvent,
-  NativeSyntheticEvent,
-  ScrollView,
-} from "react-native";
-import Layout from "../../constants/Layout";
-import Grid from "../Grid/Grid";
+import { ScrollView } from "react-native";
 
 // internal
+import Layout from "../../constants/Layout";
+import Grid from "../Grid/Grid";
 import { ContainerProps } from "../Themed";
 
-export type MansonryListProps = ContainerProps & {
+export type MasonryListProps = ContainerProps & {
   data: readonly any[] | null | undefined;
-  renderItem: MansonryListRenderItemFunc<any>;
+  renderItem: MasonryListRenderItemFunc<any>;
   colsXs?: number;
   colsSm?: number;
   spacing?: number;
 };
 
-export type MansonryListRenderItem<T> = {
+export type MasonryListRenderItem<T> = {
   item: T;
   index: number;
 };
-export type MansonryListRenderItemFunc<T> = (
-  item: MansonryListRenderItem<T>
+export type MasonryListRenderItemFunc<T> = (
+  item: MasonryListRenderItem<T>
 ) => any;
 
 /**
- * TODO scroll optimalization
  *
- * @desc can by very inefficient for a large amount of data because of offset cells rendering
- * @returns simple mansonry lists populated by data
+ * @desc custom grid view with a masonry look, default flat list doesn't have this feature
+ * @returns simple masonry lists populated by data
  */
-const MansonryList = ({
+const MasonryList = ({
   data,
   renderItem,
   colsXs = 1,
   colsSm = 1,
   spacing = 0.5,
-}: MansonryListProps) => {
+}: MasonryListProps) => {
   const [dataSet, setDataSet] = useState<any[][] | null>(null);
   // const [scrollOfset, setScrollOfset] = useState(0);
   const [cols, setCols] = useState(1);
@@ -64,10 +59,6 @@ const MansonryList = ({
     setDataSet(tmpDataSet);
   }, [colsXs, colsSm, data]);
 
-  const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-    // console.log(e.nativeEvent.contentOffset);
-  };
-
   const elements = [];
 
   const br = 12 / cols;
@@ -87,7 +78,7 @@ const MansonryList = ({
   }
 
   return (
-    <ScrollView onScroll={onScroll}>
+    <ScrollView>
       <Grid container spacing={spacing}>
         {elements}
       </Grid>
@@ -95,4 +86,4 @@ const MansonryList = ({
   );
 };
 
-export default MansonryList;
+export default MasonryList;

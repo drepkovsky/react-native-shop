@@ -1,10 +1,9 @@
 // react
 import React from "react";
-import { RefreshControlProps } from "react-native";
 import { Product, ProductCallback } from "../../types";
 
 import ProductCard from "./ProductCard";
-import MansonryList from "../GridList/MansonryList";
+import MasonryList from "../MasonryList/MasonryList";
 
 export type ProductsListProps = {
   data: Product[];
@@ -17,7 +16,7 @@ export type ProductsListProps = {
  */
 const ProductsList = ({ data, onProductClick }: ProductsListProps) => {
   return (
-    <MansonryList
+    <MasonryList
       colsXs={2}
       colsSm={2}
       data={data}

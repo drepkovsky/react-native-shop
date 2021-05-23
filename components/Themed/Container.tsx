@@ -1,10 +1,10 @@
 import * as React from "react";
 
 import { View as DefaultView } from "react-native";
-import { ThemeProps } from "../../types";
 import useThemeColor from "../../hooks/useThemeColor";
+import { ViewProps } from "./View";
 
-export type ContainerProps = ThemeProps & DefaultView["props"];
+export type ContainerProps = ViewProps;
 
 export function Container(props: ContainerProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;

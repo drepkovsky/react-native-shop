@@ -1,8 +1,10 @@
 import * as React from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import {
   createStackNavigator,
+  HeaderStyleInterpolators,
   StackNavigationProp,
+  TransitionSpecs,
 } from "@react-navigation/stack";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -19,21 +21,37 @@ import {
 } from "../types";
 import UserScreen from "../screens/UserScreen";
 import DetailsScreen from "../screens/DetailsScreen";
+import { Platform } from "react-native";
 
 // Create basic routing of our route
 
-const BottomTab = createBottomTabNavigator<BottomTabParamList>();
+const Tab = createMaterialTopTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
 
   return (
-    <BottomTab.Navigator
+    <Tab.Navigator
+      tabBarPosition="bottom"
       initialRouteName="Shop"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].brand }}
-    >
+      tabBarOptions={{
+        showIcon: true,
+        showLabel: false,
+        indicatorContainerStyle: {},
+        indicatorStyle: {
+          backgroundColor: Colors[colorScheme].brand,
+        },
+        activeTintColor: Colors[colorScheme].brand,
+        inactiveTintColor: Colors[colorScheme].disabled,
+        style: {
+          backgroundColor: Colors[colorScheme].background,
+          elevation: 0,
+          shadowOpacity: 0,
+          borderTopWidth: 0,
+        },
+      }}>
       {/* shop tab */}
-      <BottomTab.Screen
+      <Tab.Screen
         name="Shop"
         component={TabShopNavigator}
         options={{
@@ -44,7 +62,7 @@ export default function BottomTabNavigator() {
       />
 
       {/* cart tab */}
-      <BottomTab.Screen
+      <Tab.Screen
         name="Cart"
         component={TabCartNavigator}
         options={{
@@ -55,7 +73,7 @@ export default function BottomTabNavigator() {
       />
 
       {/* user tab */}
-      <BottomTab.Screen
+      <Tab.Screen
         name="User"
         component={TabUserNavigator}
         options={{
@@ -64,7 +82,7 @@ export default function BottomTabNavigator() {
           ),
         }}
       />
-    </BottomTab.Navigator>
+    </Tab.Navigator>
   );
 }
 
@@ -81,25 +99,56 @@ const TabCartStack = createStackNavigator<TabCartParamList>();
 const TabUserStack = createStackNavigator<TabUserParamList>();
 
 function TabShopNavigator() {
+  const colorScheme = useColorScheme();
+
+  const gesture = Platform.OS === "ios" ? "horizontal" : "vertical";
+
   return (
-    <TabShopStack.Navigator>
+    <TabShopStack.Navigator
+      detachInactiveScreens={false}
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: Colors[colorScheme].background,
+          elevation: 0,
+          shadowOpacity: 0,
+        },
+        headerTintColor: Colors[colorScheme].text,
+        headerTitleAlign: "center",
+      }}>
       <TabShopStack.Screen
         name="Products"
         component={ProductsScreen}
-        options={{ headerTitle: "Products" }}
+        options={{
+          headerTitle: "Products",
+          gestureDirection: "horizontal",
+        }}
       />
       <TabShopStack.Screen
         name="Details"
         component={DetailsScreen}
-        options={{ headerTitle: "Details" }}
+        options={{
+          gestureDirection: gesture,
+          gestureEnabled: true,
+          headerTitle: "Details",
+        }}
       />
     </TabShopStack.Navigator>
   );
 }
 
 function TabCartNavigator() {
+  const colorScheme = useColorScheme();
   return (
-    <TabCartStack.Navigator>
+    <TabCartStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: Colors[colorScheme].background,
+          elevation: 0,
+          shadowOpacity: 0,
+        },
+        headerTintColor: Colors[colorScheme].text,
+        headerTitleAlign: "center",
+      }}>
       <TabCartStack.Screen
         name="Cart"
         component={CartScreen}
@@ -110,8 +159,18 @@ function TabCartNavigator() {
 }
 
 function TabUserNavigator() {
+  const colorScheme = useColorScheme();
   return (
-    <TabUserStack.Navigator>
+    <TabUserStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: Colors[colorScheme].background,
+          elevation: 0,
+          shadowOpacity: 0,
+        },
+        headerTintColor: Colors[colorScheme].text,
+        headerTitleAlign: "center",
+      }}>
       <TabUserStack.Screen
         name="User"
         component={UserScreen}

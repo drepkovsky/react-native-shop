@@ -3,7 +3,8 @@ import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import * as React from "react";
 
-// hook for async resource loading
+// hook for async resource loading prior app startup
+// only load things necessary for app to be running
 export default function useCachedResources() {
   const [isLoadingComplete, setLoadingComplete] = React.useState(false);
 

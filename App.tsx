@@ -2,6 +2,7 @@ import React from "react";
 
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Provider } from "react-redux";
 
 // hooks
 import useCachedResources from "./hooks/useCachedResources";
@@ -11,8 +12,8 @@ import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
 
 // redux
-import { Provider } from "react-redux";
 import store from "./redux/store";
+import SnackbarProvider from "./components/Snackbar/Snackbar";
 
 // component
 export default function App() {
@@ -25,8 +26,10 @@ export default function App() {
     return (
       <Provider store={store}>
         <SafeAreaProvider>
-          <Navigation colorScheme={colorScheme} />
-          <StatusBar />
+          <SnackbarProvider>
+            <Navigation colorScheme={colorScheme} />
+            <StatusBar style={colorScheme == "dark" ? "light" : "dark"} />
+          </SnackbarProvider>
         </SafeAreaProvider>
       </Provider>
     );

@@ -1,18 +1,14 @@
 import React, { useEffect } from "react";
-import {
-  ActivityIndicator,
-  RefreshControl,
-  ScrollView,
-  StyleSheet,
-} from "react-native";
+import { ActivityIndicator, RefreshControl, StyleSheet } from "react-native";
 
 import { ProductScreenNavigationProp } from "../types";
 import ProductsList from "../components/Products/ProductsList";
-import { Container, Text, View } from "../components/Themed";
+import { Text, View } from "../components/Themed";
 import { useAppSelector } from "../hooks/useRedux";
 import useThemeColor from "../hooks/useThemeColor";
 import { loadProducts } from "../redux/actions/act_products";
 import { useAppDispatch } from "./../hooks/useRedux";
+import { ScrollView } from "react-native-gesture-handler";
 
 // fetches all products from database, and populates product list
 
@@ -40,25 +36,27 @@ export default function ProductsScreen({ navigation }: ProductScreenProp) {
     dispatch(loadProducts());
   }, []);
 
-  return !products?.size ? (
-    <Container style={styles.container}>
-      {isLoading ? (
-        <ActivityIndicator color={brand} />
-      ) : (
-        <Text>No products ...</Text>
-      )}
-    </Container>
-  ) : (
-    <ScrollView
-      refreshControl={
-        <RefreshControl refreshing={isLoading} onRefresh={onRefresh} />
-      }
-    >
-      <ProductsList
-        data={Array.from(products.values())}
-        onProductClick={onProductClick}
-      />
-    </ScrollView>
+  return (
+    <View>
+      <ScrollView
+        contentContainerStyle={!products?.size && styles.container}
+        refreshControl={
+          <RefreshControl refreshing={isLoading} onRefresh={onRefresh} />
+        }>
+        {!products?.size ? (
+          isLoading ? (
+            <ActivityIndicator color={brand} />
+          ) : (
+            <Text>No products ...</Text>
+          )
+        ) : (
+          <ProductsList
+            data={Array.from(products.values())}
+            onProductClick={onProductClick}
+          />
+        )}
+      </ScrollView>
+    </View>
   );
 }
 

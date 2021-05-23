@@ -1,3 +1,5 @@
+import { prefixObjProperties } from "../utils/utils";
+
 const GREY = {
   100: "#F9FAFB",
   200: "#F4F6F8",
@@ -10,26 +12,29 @@ const GREY = {
   900: "#161C24",
 };
 
-const BRAND = "#00AB55";
+const BRAND = "#07b883";
 
-const PALLETE = {
+const PALETTE = {
   brand: BRAND,
   transparent: "transparent",
+  ...prefixObjProperties(GREY, "grey."),
 };
 
 export default {
   light: {
     text: GREY[900],
-    tint: GREY[400],
+    divider: GREY[300],
+    disabled: GREY[500],
     background: GREY[100],
     paper: "#ffffff",
-    ...PALLETE,
+    ...PALETTE,
   },
   dark: {
     text: GREY[100],
-    tint: GREY[600],
+    divider: GREY[700],
+    disabled: GREY[400],
     background: GREY[900],
     paper: GREY[800],
-    ...PALLETE,
+    ...PALETTE,
   },
 };
