@@ -9,8 +9,14 @@ const Typography: { [key: string]: TextStyle } = {
     fontSize: 16,
     fontWeight: "bold",
   },
+
   default: {
     fontSize: 12,
+    fontWeight: "normal",
+  },
+
+  body: {
+    fontSize: 16,
     fontWeight: "normal",
   },
 };

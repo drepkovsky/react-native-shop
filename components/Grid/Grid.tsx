@@ -32,19 +32,20 @@ const Grid = ({
 
   const br = Math.min(Math.max(Layout.isSmallDevice ? xs : sm, 0), 12) / 12;
 
-  if (item)
-    Object.assign(styleProps, {
-      flexBasiss: br,
-      maxWidth: `${br * 100}%`,
-      flexGrow: 0,
-      flexShrink: 1,
-      padding: Layout.spacing(context.spacing),
-    });
   if (container)
     Object.assign(styleProps, {
       width: "100%",
       flexWrap: "wrap",
       flexDirection: direction,
+      marginHorizontal: -Layout.spacing(context.spacing) / 2,
+    });
+  if (item)
+    Object.assign(styleProps, {
+      flexBasiss: br,
+      width: `${br * 100}%`,
+      flexGrow: 0,
+      paddingLeft: Layout.spacing(context.spacing),
+      paddingTop: Layout.spacing(context.spacing),
     });
 
   const body = (

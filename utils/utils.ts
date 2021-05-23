@@ -8,5 +8,8 @@
  */
 export const strTrim = (str: string, len: number) => {
   let result = str.substr(0, len);
-  return result + "...";
+  if (result !== str) {
+    result = result + "...";
+  }
+  return result;
 };

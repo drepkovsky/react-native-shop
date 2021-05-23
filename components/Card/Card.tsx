@@ -9,8 +9,9 @@ import Layout from "../../constants/Layout";
 export const Card = ({ style, children, ...props }: PaperProps) => {
   return (
     <Paper
-      style={[styles.root, Styles.radius, Styles.shadows[3], style]}
-      {...props}>
+      style={[styles.root, Styles.radius, Styles.shadows[2], style]}
+      {...props}
+    >
       {children}
     </Paper>
   );

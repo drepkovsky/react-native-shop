@@ -1,6 +1,9 @@
 import * as React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  createStackNavigator,
+  StackNavigationProp,
+} from "@react-navigation/stack";
 import { Ionicons } from "@expo/vector-icons";
 
 // internal
@@ -15,6 +18,7 @@ import {
   TabUserParamList,
 } from "../types";
 import UserScreen from "../screens/UserScreen";
+import DetailsScreen from "../screens/DetailsScreen";
 
 // Create basic routing of our route
 
@@ -26,7 +30,8 @@ export default function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       initialRouteName="Shop"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].brand }}>
+      tabBarOptions={{ activeTintColor: Colors[colorScheme].brand }}
+    >
       {/* shop tab */}
       <BottomTab.Screen
         name="Shop"
@@ -82,6 +87,11 @@ function TabShopNavigator() {
         name="Products"
         component={ProductsScreen}
         options={{ headerTitle: "Products" }}
+      />
+      <TabShopStack.Screen
+        name="Details"
+        component={DetailsScreen}
+        options={{ headerTitle: "Details" }}
       />
     </TabShopStack.Navigator>
   );

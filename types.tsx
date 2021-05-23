@@ -1,3 +1,7 @@
+import { RouteProp } from "@react-navigation/core";
+import { StackNavigationProp } from "@react-navigation/stack";
+
+// navigation
 export type RootStackParamList = {
   Root: undefined;
   NotFound: undefined;
@@ -11,7 +15,7 @@ export type BottomTabParamList = {
 
 export type TabShopParamList = {
   Products: undefined;
-  Details: undefined;
+  Details: { productId: number };
 };
 
 export type TabCartParamList = {
@@ -21,6 +25,17 @@ export type TabCartParamList = {
 export type TabUserParamList = {
   User: undefined;
 };
+
+export type ProductScreenNavigationProp = StackNavigationProp<
+  TabShopParamList,
+  "Products"
+>;
+
+export type DetailsScreenNavigationProp = StackNavigationProp<
+  TabShopParamList,
+  "Details"
+>;
+export type DetailsScreenRouteProp = RouteProp<TabShopParamList, "Details">;
 
 export type ThemeProps = {
   lightColor?: string;
@@ -35,3 +50,5 @@ export type Product = {
   price: number;
   image: string;
 };
+
+export type ProductCallback = (productID: number) => any;
