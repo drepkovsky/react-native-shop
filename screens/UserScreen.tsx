@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { Card, CardContent, CardImage } from "../components/Card/Card";
+import { getUser } from "../api/users";
+import { CardImage } from "../components/Card/Card";
 
 import { Container, Text, View } from "../components/Themed";
 import Button from "../components/Themed/Button";
@@ -15,7 +15,7 @@ export default function UserScreen() {
     useState<{ name: string; email: string; image: string } | null>(null);
 
   useEffect(() => {
-    fetch("https://randomuser.me/api/")
+    getUser()
       .then((res) => res.json())
       .then((json) =>
         setUser({
