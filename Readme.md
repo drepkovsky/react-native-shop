@@ -27,3 +27,17 @@ https://docs.expo.io/workflow/ios-simulator/
 3. Scan QR code from expo client - android (Expo GO), ios (Camera)
 
 Or you can try to build standalone apps
+
+## Screenshots
+
+![image-20210524162608661](screenshots/screen (6).png)
+
+![image-20210524162608661](screenshots/screen (5).png)
+
+![image-20210524162608661](screenshots/screen (4).png)
+
+![image-20210524162608661](screenshots/screen (3).png)
+
+![image-20210524162608661](screenshots/screen (2).png)
+
+![image-20210524162608661](screenshots/screen (1).png)

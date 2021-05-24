@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "reac-native-shop",
-    "slug": "reac-native-shop",
+    "name": "react-native-shop",
+    "slug": "react-native-shop",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -29,6 +29,8 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
-    }
+    },
+    "description": "",
+    "githubUrl": "https://github.com/drepkovsky/react-native-shop"
   }
 }
