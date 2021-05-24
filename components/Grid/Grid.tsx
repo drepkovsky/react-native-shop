@@ -39,9 +39,9 @@ const Grid = ({
       flexDirection: direction,
       marginHorizontal: -Layout.spacing(context.spacing) / 2,
     });
+
   if (item)
     Object.assign(styleProps, {
-      flexBasiss: br,
       width: `${br * 100}%`,
       flexGrow: 0,
       paddingLeft: Layout.spacing(context.spacing),

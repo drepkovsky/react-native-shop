@@ -7,7 +7,7 @@ import { Image, Pressable, StyleSheet } from "react-native";
 import Layout from "../../constants/Layout";
 import useThemeColor from "../../hooks/useThemeColor";
 import { Product } from "../../types";
-import { strTrim } from "../../utils/utils";
+import { formatPrice, strTrim } from "../../utils/utils";
 import { Card, CardContent } from "../Card/Card";
 import Grid from "../Grid/Grid";
 import { Container, Text } from "../Themed";
@@ -29,19 +29,25 @@ const CartProductCart = ({
 
   return (
     <Card style={styles.card}>
-      <CardContent>
-        <Grid container spacing={1}>
-          <Grid item xs={2} sm={2}>
-            <Image style={styles.image} source={{ uri: product.image }} />
-          </Grid>
+      <Grid container>
+        <Grid item xs={2} sm={2} style={{ backgroundColor: "#fff" }}>
+          <Image style={styles.image} source={{ uri: product.image }} />
+        </Grid>
+
+        <Grid item container spacing={1} xs={10} sm={10}>
           <Grid item xs={3} sm={3}>
             <Container style={styles.align}>
-              <Text>{strTrim(product.title, 30)} </Text>
+              <Text>{strTrim(product.title, 20)} </Text>
+            </Container>
+          </Grid>
+          <Grid item xs={2} sm={2}>
+            <Container style={styles.align}>
+              <Text>{count}x</Text>
             </Container>
           </Grid>
           <Grid item xs={3} sm={3}>
             <Container style={styles.align}>
-              <Text variant="title">{count}x</Text>
+              <Text>{formatPrice(product.price * count)}</Text>
             </Container>
           </Grid>
           <Grid item xs={2} sm={2}>
@@ -81,7 +87,7 @@ const CartProductCart = ({
             </Container>
           </Grid>
         </Grid>
-      </CardContent>
+      </Grid>
     </Card>
   );
 };
@@ -91,15 +97,15 @@ const styles = StyleSheet.create({
   image: {
     resizeMode: "contain",
     width: "100%",
-    height: 50,
+    height: "100%",
   },
   align: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
   },
   card: {
     marginHorizontal: Layout.spacing(1),
     marginTop: Layout.spacing(0.5),
+    height: 70,
   },
 });

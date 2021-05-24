@@ -21,6 +21,7 @@ export default {
           Cart: {
             screens: {
               CartScreen: "Cart",
+              SummaryScreen: "Summary",
             },
           },
           User: {

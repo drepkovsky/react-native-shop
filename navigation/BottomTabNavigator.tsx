@@ -19,6 +19,7 @@ import DetailsScreen from "../screens/DetailsScreen";
 import { Platform } from "react-native";
 import Badge from "../components/Themed/Badge";
 import { useAppSelector } from "../hooks/useRedux";
+import SummaryScreen from "../screens/SummaryScreen";
 
 // Create basic routing of our route
 
@@ -164,6 +165,11 @@ function TabCartNavigator() {
         name="Cart"
         component={CartScreen}
         options={{ headerTitle: "Cart" }}
+      />
+      <TabCartStack.Screen
+        name="Summary"
+        component={SummaryScreen}
+        options={{ headerTitle: "Summary" }}
       />
     </TabCartStack.Navigator>
   );

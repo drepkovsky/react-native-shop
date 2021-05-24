@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 
 //internal
 import Grid from "../components/Grid/Grid";
-import CartProductCart from "../components/Products/CartProductCart";
+import CartProductCart from "../components/Products/CartProductCard";
 import { Container, Paper, Text, View } from "../components/Themed";
 import Button from "../components/Themed/Button";
 import Layout from "../constants/Layout";
@@ -17,9 +17,12 @@ import {
   addProductToCart,
   removeProductFromCart,
 } from "../redux/actions/act_carts";
+import { CartScreenNavigationProp } from "../types";
 import { formatPrice } from "../utils/utils";
 
-export default function CartScreen() {
+type CartScreenProp = { navigation: CartScreenNavigationProp };
+
+export default function CartScreen({ navigation }: CartScreenProp) {
   // redux
   const productIds = useAppSelector((state) => state.cart.products);
   const { products } = useAppSelector((state) => state.products);
@@ -31,6 +34,10 @@ export default function CartScreen() {
   const onRemove = (id: number) => {
     dispatch(removeProductFromCart(id));
   };
+
+  const onBuyClick = useCallback(() => {
+    navigation.navigate("Summary");
+  }, [navigation]);
 
   const getTotal = useCallback(() => {
     let total = 0;
@@ -88,7 +95,10 @@ export default function CartScreen() {
             </Paper>
           </Grid>
           <Grid item xs={5} sm={5}>
-            <Button disabled={Boolean(!getCount())} style={styles.fill}>
+            <Button
+              onPress={onBuyClick}
+              disabled={Boolean(!getCount())}
+              style={styles.fill}>
               <Text variant="title" style={[styles.bottomButtonText]}>
                 Buy now
               </Text>
@@ -114,6 +124,7 @@ const EmptyCart = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingBottom: 60,
   },
   align: {
     flex: 1,

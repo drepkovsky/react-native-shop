@@ -1,5 +1,5 @@
 // types
-import { CART_ADD_PRODUCT, CART_REMOVE_PRODUCT } from "../types";
+import { CART_ADD_PRODUCT, CART_REMOVE_PRODUCT, CART_CLEAN } from "../types";
 import { AppReducer } from "../store";
 
 export interface CardState {
@@ -13,6 +13,9 @@ const initialState = {
 // Reducers for cart store logic
 const cartReducer: AppReducer<CardState> = (state = initialState, action) => {
   switch (action.type) {
+    case CART_CLEAN: {
+      return { products: {} };
+    }
     case CART_ADD_PRODUCT: {
       const res = (state.products[action.payload.productId] || 0) + 1;
       return {

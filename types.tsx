@@ -20,7 +20,7 @@ export type TabShopParamList = {
 
 export type TabCartParamList = {
   Cart: undefined;
-  Checkout: undefined;
+  Summary: undefined;
 };
 export type TabUserParamList = {
   User: undefined;
@@ -29,6 +29,14 @@ export type TabUserParamList = {
 export type ProductScreenNavigationProp = StackNavigationProp<
   TabShopParamList,
   "Products"
+>;
+export type CartScreenNavigationProp = StackNavigationProp<
+  TabCartParamList,
+  "Cart"
+>;
+export type SummaryScreenNavigationProp = StackNavigationProp<
+  TabCartParamList,
+  "Summary"
 >;
 
 export type Snack = {

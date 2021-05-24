@@ -52,7 +52,10 @@ export default function UserScreen() {
             onPress={toggleColor}>
             <Text
               variant="title"
-              style={{ color: Colors[colorScheme].background }}>
+              style={{
+                color: Colors[colorScheme].background,
+                textTransform: "uppercase",
+              }}>
               {colorScheme}
             </Text>
           </Button>
@@ -66,7 +69,6 @@ const styles = StyleSheet.create({
   button: {
     width: 100,
     height: 50,
-    ...Styles.radius,
     ...Styles.shadows[2],
   },
   container: {
@@ -75,8 +77,9 @@ const styles = StyleSheet.create({
   },
   settings: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
+    justifyContent: "flex-end",
+    padding: Layout.spacing(2),
   },
   card: {
     marginTop: 50,
