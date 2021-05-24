@@ -30,14 +30,14 @@ Or you can try to build standalone apps
 
 ## Screenshots
 
-![image-20210524162608661](/screenshots/screen (6).png)
+![image-20210524162608661](./screenshots/screen (6).png)
 
-![image-20210524162608661](/screenshots/screen (5).png)
+![image-20210524162608661](./screenshots/screen (5).png)
 
-![image-20210524162608661](/screenshots/screen (4).png)
+![image-20210524162608661](./screenshots/screen (4).png)
 
-![image-20210524162608661](/screenshots/screen (3).png)
+![image-20210524162608661](./screenshots/screen (3).png)
 
-![image-20210524162608661](/screenshots/screen (2).png)
+![image-20210524162608661](./screenshots/screen (2).png)
 
-![image-20210524162608661](/screenshots/screen (1).png)
+![image-20210524162608661](./screenshots/screen (1).png)
