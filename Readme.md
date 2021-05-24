@@ -30,12 +30,16 @@ Or you can try to build standalone apps
 
 ## Screenshots
 
-![image-20210524162608661](https://github.com/drepkovsky/react-native-shop/blob/main/screenshots/screen%20(5).png?raw=true)
+![1](https://github.com/drepkovsky/react-native-shop/blob/main/screenshots/screen%20(1).png?raw=true)
 
-![image-20210524162608661](https://github.com/drepkovsky/react-native-shop/blob/main/screenshots/screen%20(4).png?raw=trueg)
+![2](https://github.com/drepkovsky/react-native-shop/blob/main/screenshots/screen%20(2).png?raw=trueg)
 
-![image-20210524162608661](https://github.com/drepkovsky/react-native-shop/blob/main/screenshots/screen%20(3).png?raw=true)
+![3](https://github.com/drepkovsky/react-native-shop/blob/main/screenshots/screen%20(3).png?raw=true)
 
-![image-20210524162608661](https://github.com/drepkovsky/react-native-shop/blob/main/screenshots/screen%20(2).png?raw=true)
+![4](https://github.com/drepkovsky/react-native-shop/blob/main/screenshots/screen%20(4).png?raw=true)
 
-![image-20210524162608661](https://github.com/drepkovsky/react-native-shop/blob/main/screenshots/screen%20(1).png?raw=true)
+![5](https://github.com/drepkovsky/react-native-shop/blob/main/screenshots/screen%20(5).png?raw=true)
+
+![6](https://github.com/drepkovsky/react-native-shop/blob/main/screenshots/screen%20(6).png?raw=true)
+
+![7](https://github.com/drepkovsky/react-native-shop/blob/main/screenshots/screen%20(7).png?raw=true)
