@@ -1,12 +1,15 @@
+// react
 import { Ionicons } from "@expo/vector-icons";
 import * as React from "react";
-import { Image, Platform, Pressable, StyleSheet } from "react-native";
-import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
+import { useCallback } from "react";
+import { FlatList, StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
-import { Card, CardContent } from "../components/Card/Card";
-import Grid from "../components/Grid/Grid";
 
+//internal
+import Grid from "../components/Grid/Grid";
+import CartProductCart from "../components/Products/CartProductCart";
 import { Container, Paper, Text, View } from "../components/Themed";
+import Button from "../components/Themed/Button";
 import Layout from "../constants/Layout";
 import { useAppSelector } from "../hooks/useRedux";
 import useThemeColor from "../hooks/useThemeColor";
@@ -14,8 +17,7 @@ import {
   addProductToCart,
   removeProductFromCart,
 } from "../redux/actions/act_carts";
-import { Product } from "../types";
-import { strTrim } from "../utils/utils";
+import { formatPrice } from "../utils/utils";
 
 export default function CartScreen() {
   // redux
@@ -30,20 +32,22 @@ export default function CartScreen() {
     dispatch(removeProductFromCart(id));
   };
 
-  const getTotal = () => {
+  const getTotal = useCallback(() => {
     let total = 0;
 
     Object.keys(productIds).forEach((key) => {
       total += products[key].price * productIds[key];
     });
     return total;
-  };
+  }, [productIds]);
 
-  const brand = useThemeColor({}, "brand");
+  const getCount = useCallback(() => {
+    return Object.keys(productIds).length;
+  }, [productIds]);
 
   return (
     <View style={styles.container}>
-      {!Object.keys(productIds).length || !products ? (
+      {!getCount() || !products ? (
         <EmptyCart />
       ) : (
         <FlatList
@@ -52,7 +56,7 @@ export default function CartScreen() {
           data={Object.keys(productIds)}
           keyExtractor={(item) => item}
           renderItem={(item) => (
-            <CartItem
+            <CartProductCart
               onAdd={onAdd}
               onRemove={onRemove}
               key={item.index}
@@ -67,42 +71,28 @@ export default function CartScreen() {
         <Grid container>
           <Grid item xs={7} sm={7}>
             <Paper style={[styles.fill]}>
-              <Grid container>
+              <Grid container style={[styles.fill]}>
                 <Grid item xs={6} sm={6}>
-                  <Text
-                    variant="title"
-                    style={[styles.totalText, { textAlign: "center" }]}
-                  >
-                    Total :
-                  </Text>
+                  <Container style={[styles.align]}>
+                    <Text variant="title">Total :</Text>
+                  </Container>
                 </Grid>
                 <Grid item xs={6} sm={6}>
-                  <Text
-                    variant="title"
-                    color="brand"
-                    style={[styles.totalText, { textAlign: "center" }]}
-                  >
-                    {`${getTotal()} $`}
-                  </Text>
+                  <Container style={[styles.align]}>
+                    <Text variant="title" color="brand">
+                      {formatPrice(getTotal())}
+                    </Text>
+                  </Container>
                 </Grid>
               </Grid>
             </Paper>
           </Grid>
           <Grid item xs={5} sm={5}>
-            <Container style={[styles.fill, { backgroundColor: brand }]}>
-              <Pressable
-                android_ripple={{ color: "#fff" }}
-                style={({ pressed }) => [
-                  {
-                    opacity: pressed && Platform.OS === "ios" ? 0.5 : 1,
-                  },
-                ]}
-              >
-                <Text variant="title" style={[styles.bottomButtonText]}>
-                  Buy now
-                </Text>
-              </Pressable>
-            </Container>
+            <Button disabled={Boolean(!getCount())} style={styles.fill}>
+              <Text variant="title" style={[styles.bottomButtonText]}>
+                Buy now
+              </Text>
+            </Button>
           </Grid>
         </Grid>
       </Container>
@@ -111,91 +101,19 @@ export default function CartScreen() {
 }
 
 const EmptyCart = () => {
+  const color = useThemeColor({}, "text");
+
   return (
     <Container style={styles.align}>
-      <Ionicons name="ios-cart-outline" size={40} />
-      <Text variant="subtitle">Cart is empty</Text>
+      <Ionicons color={color} name="ios-cart-outline" size={40} />
+      <Text variant="subtitle">Your cart is empty</Text>
     </Container>
-  );
-};
-
-const CartItem = ({
-  product,
-  count,
-  onAdd,
-  onRemove,
-}: {
-  product?: Product;
-  count?: number;
-  onAdd: (id: number) => void;
-  onRemove: (id: number) => void;
-}) => {
-  if (!product || !count) return null;
-  return (
-    <Card style={styles.card}>
-      <CardContent>
-        <Grid container spacing={1}>
-          <Grid item xs={2} sm={2}>
-            <Image style={styles.image} source={{ uri: product.image }} />
-          </Grid>
-          <Grid item xs={3} sm={3}>
-            <Container style={styles.align}>
-              <Text>{strTrim(product.title, 30)} </Text>
-            </Container>
-          </Grid>
-          <Grid item xs={3} sm={3}>
-            <Container style={styles.align}>
-              <Text variant="title">{count}x</Text>
-            </Container>
-          </Grid>
-          <Grid item xs={2} sm={2}>
-            <Container style={styles.align}>
-              <Pressable
-                style={({ pressed }) => [
-                  {
-                    opacity: pressed ? 0.5 : 1,
-                  },
-                ]}
-                hitSlop={20}
-                onPress={() => onAdd(product.id)}
-              >
-                <Ionicons size={25} name="ios-add-circle-outline" />
-              </Pressable>
-            </Container>
-          </Grid>
-          <Grid item xs={2} sm={2}>
-            <Container style={styles.align}>
-              <Pressable
-                style={({ pressed }) => [
-                  {
-                    opacity: pressed ? 0.5 : 1,
-                  },
-                ]}
-                hitSlop={20}
-                onPress={() => onRemove(product.id)}
-              >
-                <Ionicons size={25} name="ios-remove-circle-outline" />
-              </Pressable>
-            </Container>
-          </Grid>
-        </Grid>
-      </CardContent>
-    </Card>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  card: {
-    marginHorizontal: Layout.spacing(1),
-    marginTop: Layout.spacing(0.5),
-  },
-  image: {
-    width: "100%",
-    minHeight: 50,
-    resizeMode: "contain",
   },
   align: {
     flex: 1,
@@ -216,15 +134,6 @@ const styles = StyleSheet.create({
   },
   bottomButtonText: {
     color: "#ffff",
-    textAlign: "center",
-    width: "100%",
-    height: "100%",
     textTransform: "uppercase",
-    textAlignVertical: "center",
-  },
-  totalText: {
-    width: "100%",
-    height: "100%",
-    textAlignVertical: "center",
   },
 });

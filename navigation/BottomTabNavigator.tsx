@@ -1,16 +1,11 @@
 import * as React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import {
-  createStackNavigator,
-  HeaderStyleInterpolators,
-  StackNavigationProp,
-  TransitionSpecs,
-} from "@react-navigation/stack";
+import { createStackNavigator } from "@react-navigation/stack";
 import { Ionicons } from "@expo/vector-icons";
 
 // internal
 import Colors from "../constants/Colors";
-import useColorScheme from "../hooks/useColorScheme";
+import { useColorScheme } from "../hooks/useColorScheme";
 import ProductsScreen from "../screens/ProductsScreen";
 import CartScreen from "../screens/CartScreen";
 import {
@@ -22,6 +17,8 @@ import {
 import UserScreen from "../screens/UserScreen";
 import DetailsScreen from "../screens/DetailsScreen";
 import { Platform } from "react-native";
+import Badge from "../components/Themed/Badge";
+import { useAppSelector } from "../hooks/useRedux";
 
 // Create basic routing of our route
 
@@ -29,6 +26,17 @@ const Tab = createMaterialTopTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
+
+  const productIds = useAppSelector((state) => state.cart.products);
+
+  const getTotal = React.useCallback(() => {
+    let total = 0;
+
+    Object.keys(productIds).forEach((key) => {
+      total += productIds[key];
+    });
+    return total;
+  }, [productIds]);
 
   return (
     <Tab.Navigator
@@ -50,8 +58,7 @@ export default function BottomTabNavigator() {
           shadowOpacity: 0,
           borderTopWidth: 0,
         },
-      }}
-    >
+      }}>
       {/* shop tab */}
       <Tab.Screen
         name="Shop"
@@ -69,7 +76,9 @@ export default function BottomTabNavigator() {
         component={TabCartNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-cart" color={color} />
+            <Badge size={20} count={getTotal()}>
+              <TabBarIcon name="ios-cart" color={color} />
+            </Badge>
           ),
         }}
       />
@@ -116,8 +125,7 @@ function TabShopNavigator() {
         },
         headerTintColor: Colors[colorScheme].text,
         headerTitleAlign: "center",
-      }}
-    >
+      }}>
       <TabShopStack.Screen
         name="Products"
         component={ProductsScreen}
@@ -151,8 +159,7 @@ function TabCartNavigator() {
         },
         headerTintColor: Colors[colorScheme].text,
         headerTitleAlign: "center",
-      }}
-    >
+      }}>
       <TabCartStack.Screen
         name="Cart"
         component={CartScreen}
@@ -174,8 +181,7 @@ function TabUserNavigator() {
         },
         headerTintColor: Colors[colorScheme].text,
         headerTitleAlign: "center",
-      }}
-    >
+      }}>
       <TabUserStack.Screen
         name="User"
         component={UserScreen}

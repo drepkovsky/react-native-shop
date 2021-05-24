@@ -16,6 +16,8 @@ const BRAND = "#07b883";
 
 const PALETTE = {
   brand: BRAND,
+  white: "#fff",
+  black: "#000",
   transparent: "transparent",
   ...prefixObjProperties(GREY, "grey."),
 };

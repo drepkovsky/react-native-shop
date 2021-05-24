@@ -35,3 +35,14 @@ export const prefixObjProperties = (
 
   return result;
 };
+
+/**
+ *
+ * @param price price number to be formatted
+ * @returns price rounded to 2 decimal with $ suffix
+ */
+export const formatPrice = (price: number) => {
+  const str = Math.round((price + Number.EPSILON) * 100) / 100;
+
+  return str + " $";
+};

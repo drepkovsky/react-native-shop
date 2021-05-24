@@ -1,5 +1,5 @@
 import Colors from "../constants/Colors";
-import useColorScheme from "./useColorScheme";
+import { useColorScheme } from "./useColorScheme";
 
 // get theme color from Colors based on theme preference, values are over-ridable
 export default function useThemeColor(

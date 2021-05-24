@@ -13,31 +13,29 @@ const Styles: StylesProps = {
         width: 0,
         height: 1,
       },
-      shadowOpacity: 0.2,
-      shadowRadius: 1.9,
-      elevation: 1,
+      shadowOpacity: 0.1,
+      shadowRadius: 2.22,
+      elevation: 2,
     },
     2: {
       shadowColor: "#000",
       shadowOffset: {
         width: 0,
-        height: 2,
+        height: 3,
       },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-
-      elevation: 5,
+      shadowOpacity: 0.12,
+      shadowRadius: 4.65,
+      elevation: 4,
     },
     3: {
       shadowColor: "#000",
       shadowOffset: {
         width: 0,
-        height: 5,
+        height: 4,
       },
-      shadowOpacity: 0.36,
-      shadowRadius: 6.68,
-
-      elevation: 11,
+      shadowOpacity: 0.15,
+      shadowRadius: 4.65,
+      elevation: 6,
     },
   },
   radius: {

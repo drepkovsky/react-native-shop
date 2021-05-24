@@ -13,6 +13,7 @@ import {
 // internal
 import Grid from "../components/Grid/Grid";
 import { Text, Container, View } from "../components/Themed";
+import Button from "../components/Themed/Button";
 import Layout from "../constants/Layout";
 import { useAppSelector } from "../hooks/useRedux";
 import { useSnackbar } from "../hooks/useSnackbar";
@@ -73,8 +74,7 @@ export default function DetailsScreen({ route }: DetailsScreenProp) {
                     <Text
                       style={styles.category}
                       variant="body1"
-                      color="disabled"
-                    >
+                      color="disabled">
                       {product.category}
                     </Text>
                   </Grid>
@@ -99,30 +99,12 @@ export default function DetailsScreen({ route }: DetailsScreenProp) {
           </ScrollView>
 
           {/* bottom button */}
-          <Container
-            style={[styles.bottomContainer, { backgroundColor: brand }]}
-          >
-            <Pressable
-              android_ripple={{ color: "#fff" }}
-              style={({ pressed }) => [
-                {
-                  opacity: pressed && Platform.OS === "ios" ? 0.5 : 1,
-                },
-              ]}
-              onPress={onAddToCard}
-            >
-              <Container>
-                <Text variant="title" style={styles.bottomText}>
-                  <Ionicons
-                    name="ios-cart"
-                    size={25}
-                    style={{ marginRight: Layout.spacing(1), color: "#ffff" }}
-                  />
-                  Add to cart
-                </Text>
-              </Container>
-            </Pressable>
-          </Container>
+          <Button style={styles.bottomContainer} onPress={onAddToCard}>
+            <Text variant="title" style={styles.bottomText}>
+              <Ionicons name="ios-cart" size={25} style={{ color: "#ffff" }} />
+              Add to cart
+            </Text>
+          </Button>
         </Fragment>
       )}
     </View>
@@ -178,9 +160,6 @@ const styles = StyleSheet.create({
   },
   bottomText: {
     color: "#ffff",
-    width: "100%",
-    height: "100%",
-    textAlign: "center",
-    textAlignVertical: "center",
+    textTransform: "uppercase",
   },
 });

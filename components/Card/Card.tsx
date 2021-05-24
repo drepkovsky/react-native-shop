@@ -12,11 +12,11 @@ export type CardSeparatorProp = {
 
 export const Card = ({ style, children, ...props }: PaperProps) => {
   return (
-    <Paper
-      style={[styles.root, Styles.radius, Styles.shadows[2], style]}
-      {...props}>
-      {children}
-    </Paper>
+    <Container style={[styles.wrapper, style]}>
+      <Paper style={[styles.root]} {...props}>
+        {children}
+      </Paper>
+    </Container>
   );
 };
 
@@ -66,9 +66,14 @@ export const CardImage = ({ style, ...props }: ImageProps) => {
 };
 
 const styles = StyleSheet.create({
+  wrapper: {
+    ...Styles.shadows[2],
+    ...Styles.radius,
+  },
   root: {
     flexDirection: "column",
     overflow: "hidden",
+    ...Styles.radius,
   },
   header: {
     width: "100%",

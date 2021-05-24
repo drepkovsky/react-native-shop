@@ -1,5 +1,10 @@
-import React, { useEffect } from "react";
-import { ActivityIndicator, RefreshControl, StyleSheet } from "react-native";
+import React, { useCallback, useEffect } from "react";
+import {
+  ActivityIndicator,
+  Platform,
+  RefreshControl,
+  StyleSheet,
+} from "react-native";
 
 import { ProductScreenNavigationProp } from "../types";
 import ProductsList from "../components/Products/ProductsList";
@@ -36,15 +41,18 @@ export default function ProductsScreen({ navigation }: ProductScreenProp) {
     dispatch(loadProducts());
   }, []);
 
+  const getCount = useCallback(() => {
+    return Object.keys(products).length;
+  }, [products]);
+
   return (
-    <View>
+    <View style={styles.container}>
       <ScrollView
-        contentContainerStyle={!products?.size && styles.container}
+        contentContainerStyle={[!Boolean(getCount()) && styles.container]}
         refreshControl={
           <RefreshControl refreshing={isLoading} onRefresh={onRefresh} />
-        }
-      >
-        {!Object.keys(products).length ? (
+        }>
+        {!Boolean(getCount()) ? (
           isLoading ? (
             <ActivityIndicator color={brand} />
           ) : (

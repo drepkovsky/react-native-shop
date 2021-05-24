@@ -5,7 +5,7 @@ import { Pressable, StyleSheet } from "react-native";
 import Layout from "../../constants/Layout";
 import Styles from "../../constants/Styles";
 import { Product, ProductCallback } from "../../types";
-import { strTrim } from "../../utils/utils";
+import { formatPrice, strTrim } from "../../utils/utils";
 
 import { Card, CardContent, CardHeader, CardImage } from "../Card/Card";
 import { Container, Paper, Text } from "../Themed";
@@ -52,15 +52,14 @@ const ProductCard = ({ product, onProductClick }: ProductItemProps) => {
           </CardHeader>
           <CardContent style={styles.content}>
             <Container style={{ flex: 1 }}>
-              <Text variant="title">{`${product.price} $`}</Text>
+              <Text variant="title">{formatPrice(product.price)}</Text>
             </Container>
             <Container
               style={{
                 flex: 1,
                 flexDirection: "row",
                 justifyContent: "flex-end",
-              }}
-            >
+              }}>
               <Pressable
                 onPress={onAddToCard}
                 hitSlop={30}
@@ -68,8 +67,7 @@ const ProductCard = ({ product, onProductClick }: ProductItemProps) => {
                   {
                     opacity: pressed ? 0.5 : 1,
                   },
-                ]}
-              >
+                ]}>
                 <Ionicons
                   name="ios-cart"
                   size={25}
